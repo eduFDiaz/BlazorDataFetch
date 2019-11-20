@@ -1,0 +1,31 @@
+﻿@page "/fetchposts"
+
+@using WebApplication1.Data
+@inject PostService PostsService
+
+<h1>Fetch posts</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (posts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @foreach (var post in posts)
+    {
+        <h2>@post.Title</h2>
+        <p>@post.Body</p>
+        <hr>
+    }
+}
+
+@code {
+    Post[] posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        posts = await PostsService.GetPostsAsync();
+    }
+}
